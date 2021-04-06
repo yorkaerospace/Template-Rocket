@@ -2,7 +2,7 @@ use <BodyTubes.scad>
 
 // units: mm
 
-$fn = 360;
+$fn = 50;
 
 module conical(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="orage", in_col="red")
 {
@@ -25,7 +25,7 @@ module conical(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="o
 }
 
 
-module parabola(con_l, k=1, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=1)
+module parabolic(con_l, k=1, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=1)
 {
     // parabolic nose cone, can either be a cone at k=0 or full parabola at k=1
     R1 = con_d1/2;
@@ -168,18 +168,18 @@ module haack(con_l, con_d1, con_d2, k=0.333333, shol_l=0, shol_d1=0, shol_d2=0, 
     // sears-haack nose cone, good for transonic (von Karman)
     const1 = (con_d1/2)/ sqrt(PI);
     const2 = (con_d2/2)/ sqrt(PI);
-    
-    seri1 = [for (x=[0:step:con_l]) [x,  
+
+    seri1 = [for (x=[0:step:con_l]) [x,
         const1 * sqrt( acos(1 - (2*x)/con_l)*(PI/180)
         - sin(2 * acos(1 - (2*x)/con_l)) / 2
         + k * pow( sin(acos(1 - (2*x)/con_l)), 3))]];
-    seri2 = [for (x=[0:step:con_l]) [x,  
+    seri2 = [for (x=[0:step:con_l]) [x,
         const2 * sqrt( acos(1 - (2*x)/con_l)*(PI/180)
         - sin(2 * acos(1 - (2*x)/con_l)) / 2
         + k * pow( sin(acos(1 - (2*x)/con_l)), 3))]];
     outer = concat(seri1, [[con_l, 0]]);
     inner = concat(seri2, [[con_l, 0]]);
-    
+
     translate([0, 0, shol_l])
     union()
     {
@@ -190,7 +190,7 @@ module haack(con_l, con_d1, con_d2, k=0.333333, shol_l=0, shol_d1=0, shol_d2=0, 
             rotate_extrude()
             rotate([0, 0, -90])
             polygon(outer);
-            
+
             translate([0, 0, (con_d2-con_d1)/2])
             color(in_col)
             rotate_extrude()

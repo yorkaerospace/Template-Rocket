@@ -1,4 +1,4 @@
-/*units: cm
+/*units: mm
 tube 1: lenghth = 175
 tube 2: length = 75
 out_dia = 14
