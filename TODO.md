@@ -1,12 +1,12 @@
 # TODO
 
 ## More Fin types
-[ ] Delta # [checkbox:unchecked]
-[ ] Elliptical # [checkbox:unchecked]
-[ ] Wedge cross section # [checkbox:unchecked]
-[ ] Aerofoil cross secton # [checkbox:unchecked]
+- [ ] Delta
+- [ ] Elliptical
+- [ ] Wedge cross section
+- [ ] Aerofoil cross secton
 
 
 ## More Components
-[ ] Aviaonics mockup # [checkbox:unchecked]
-[ ] Parachute mockup # [checkbox:unchecked]
+- [ ] Aviaonics mockup
+- [ ] Parachute mockup
