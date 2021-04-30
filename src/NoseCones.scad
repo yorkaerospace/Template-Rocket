@@ -25,7 +25,7 @@ module conical(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="o
 }
 
 
-module parabolic(con_l, k=1, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=1)
+module parabolic(con_l, con_d1, con_d2, k=1, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=1)
 {
     // parabolic nose cone, can either be a cone at k=0 or full parabola at k=1
     R1 = con_d1/2;
