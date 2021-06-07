@@ -18,12 +18,12 @@ module deep_trap(root_chord, tip_chord, height, sweep, depth, thickness)
 
 color("green")
 translate([10, 0, 0])
-surface_trap(15, 12, 11, 9.5, 0.3);
+surface_trap(root_chord=15, tip_chord=12, height=11, sweep=9.5, thickness=0.3);
 
 
 
-surface_trap(20, 10, 30, 11.5, 3);
+surface_trap(root_chord=20, tip_chord=10, height=30, sweep=11.5, thickness=3);
 
 color("orange")
 translate([-10, 0, 0])
-deep_trap(20, 20, 30, 15, 10, 3);
+deep_trap(root_chord=20, tip_chord=20, height=30, sweep=15, depth=10, thickness=3);
