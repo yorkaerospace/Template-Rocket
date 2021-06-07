@@ -23,9 +23,79 @@ module conical(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="o
        tube(shol_l+(shol_d1-shol_d2), shol_d1, shol_d2, out_col, in_col);
     }
 }
+//
+//
+module elliptical(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=0.1)
+{
+    // elliptical nose cone, advantageous at subsonic speeds
+    R1 = con_d1/2;
+    R2 = con_d2/2;
 
+    ellip1 = [for (x=[0:step:con_l]) [x, R1*pow(1-(pow(x, 2)/pow(con_l, 2)), 0.5)]];
+    ellip2 = [for (x=[0:step:con_l]) [x, R2*pow(1-(pow(x, 2)/pow(con_l, 2)), 0.5)]];
 
-module parabolic(con_l, con_d1, con_d2, k=1, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=1)
+    outer = concat(ellip1, [[0, 0]]);
+    inner = concat(ellip2, [[0, 0]]);
+
+    translate([0, 0, shol_l])
+    union()
+    {
+        difference() {
+            color(out_col)
+            rotate_extrude()
+            rotate([0, 0, 90])
+            polygon(outer);
+
+            color(in_col)
+            translate([0, 0, R2-R1])
+            rotate_extrude()
+            rotate([0, 0, 90])
+            polygon(inner);
+        }
+
+        translate([0, 0, -shol_l])
+        tube(shol_l+(shol_d1 - shol_d2), shol_d1, shol_d2, out_col, in_col);
+    }
+}
+//
+//
+module tangental(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=0.1)
+{
+    // tanget nose cones, defined by a segment of a cirlce where the cirlce radius is related to the length and diameter of the nose cone
+
+    rho1 = (pow(con_d1/2, 2) + pow(con_l, 2)) / con_d1;
+    rho2 = (pow(con_d2/2, 2) + pow(con_l, 2)) / con_d2;
+
+    tang1 = [for (x =[0:step:con_l]) [x, (pow(pow(rho1, 2) - pow((x- con_l), 2), 0.5)) + con_d1/2 - rho1]];
+    tang2 = [for (x =[0:step:con_l]) [x, (pow(pow(rho2, 2) - pow((x- con_l), 2), 0.5)) + con_d2/2 - rho2]];
+
+    outer = concat(tang1, [[con_l, 0]]);
+    inner = concat(tang2, [[con_l, 0]]);
+
+    translate([0, 0, shol_l])
+    union()
+    {
+        translate([0, 0, con_l])
+        difference()
+        {
+            color(out_col)
+            rotate_extrude()
+            rotate([0, 0, -90])
+            polygon(outer);
+
+            translate([0, 0, (con_d2-con_d1)/2])
+            color(in_col)
+            rotate_extrude()
+            rotate([0, 0, -90])
+            polygon(inner);
+        }
+        translate([0, 0, -shol_l])
+        tube(shol_l+(shol_d1-shol_d2), shol_d1, shol_d2, out_col, in_col);
+    }
+}
+//
+//
+module parabolic(con_l, con_d1, con_d2, k=1, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=0.1)
 {
     // parabolic nose cone, can either be a cone at k=0 or full parabola at k=1
     R1 = con_d1/2;
@@ -60,79 +130,9 @@ module parabolic(con_l, con_d1, con_d2, k=1, shol_l=0, shol_d1=0, shol_d2=0, out
     }
 
 }
-
-
-module elliptical(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=0.2)
-{
-    // elliptical nose cone, advantageous at subsonic speeds
-    R1 = con_d1/2;
-    R2 = con_d2/2;
-
-    ellip1 = [for (x=[0:step:con_l]) [x, R1*pow(1-(pow(x, 2)/pow(con_l, 2)), 0.5)]];
-    ellip2 = [for (x=[0:step:con_l]) [x, R2*pow(1-(pow(x, 2)/pow(con_l, 2)), 0.5)]];
-
-    outer = concat(ellip1, [[0, 0]]);
-    inner = concat(ellip2, [[0, 0]]);
-
-    translate([0, 0, shol_l])
-    union()
-    {
-        difference() {
-            color(out_col)
-            rotate_extrude()
-            rotate([0, 0, 90])
-            polygon(outer);
-
-            color(in_col)
-            translate([0, 0, R2-R1])
-            rotate_extrude()
-            rotate([0, 0, 90])
-            polygon(inner);
-        }
-
-        translate([0, 0, -shol_l])
-        tube(shol_l+(shol_d1 - shol_d2), shol_d1, shol_d2, out_col, in_col);
-    }
-}
-
-
-module tangental(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=1)
-{
-    // tanget nose cones, defined by a segment of a cirlce where the cirlce radius is related to the length and diameter of the nose cone
-
-    rho1 = (pow(con_d1/2, 2) + pow(con_l, 2)) / con_d1;
-    rho2 = (pow(con_d2/2, 2) + pow(con_l, 2)) / con_d2;
-
-    tang1 = [for (x =[0:step:con_l]) [x, (pow(pow(rho1, 2) - pow((x- con_l), 2), 0.5)) + con_d1/2 - rho1]];
-    tang2 = [for (x =[0:step:con_l]) [x, (pow(pow(rho2, 2) - pow((x- con_l), 2), 0.5)) + con_d2/2 - rho2]];
-
-    outer = concat(tang1, [[con_l, 0]]);
-    inner = concat(tang2, [[con_l, 0]]);
-
-    translate([0, 0, shol_l])
-    union()
-    {
-        translate([0, 0, con_l])
-        difference()
-        {
-            color(out_col)
-            rotate_extrude()
-            rotate([0, 0, -90])
-            polygon(outer);
-
-            translate([0, 0, (con_d2-con_d1)/2])
-            color(in_col)
-            rotate_extrude()
-            rotate([0, 0, -90])
-            polygon(inner);
-        }
-        translate([0, 0, -shol_l])
-        tube(shol_l+(shol_d1-shol_d2), shol_d1, shol_d2, out_col, in_col);
-    }
-}
-
-
-module power(con_l, con_d1, con_d2, k, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=0.2)
+//
+//
+module power(con_l, con_d1, con_d2, k=1, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=0.1)
 {
     // power series nose cone, k=0.5 good for transonic, k=0.75 good for supersonic, k=0.6 good for hypersonic
     pow1 = [for (x =[0:step:con_l]) [x, (con_d1/2)*pow((x/con_l), k)]];
@@ -158,11 +158,12 @@ module power(con_l, con_d1, con_d2, k, shol_l=0, shol_d1=0, shol_d2=0, out_col="
             polygon(inner);
         }
         translate([0, 0, -shol_l])
+        color("green")
         tube(shol_l+(shol_d1-shol_d2), shol_d1, shol_d2, out_col, in_col);
     }
 }
-
-
+//
+//
 module haack(con_l, con_d1, con_d2, k=0.333333, shol_l=0, shol_d1=0, shol_d2=0, out_col="orange", in_col="red", step=0.2)
 {
     // sears-haack nose cone, good for transonic (von Karman)
@@ -201,8 +202,7 @@ module haack(con_l, con_d1, con_d2, k=0.333333, shol_l=0, shol_d1=0, shol_d2=0, 
         tube(shol_l+(shol_d1-shol_d2), shol_d1, shol_d2, out_col, in_col);
     }
 }
-
-
+//
 
 // sears-haack series
 translate([60, 0, 0])
@@ -235,8 +235,6 @@ difference()
 }
 
 // conical
-//
-//
 translate([-20, 0, 0])
 difference()
 {
@@ -250,15 +248,13 @@ difference()
 translate([20, 0, 0])
 difference()
 {
-    parabola(con_l=30, k=1, con_d1=14, con_d2=13, shol_l=10, shol_d1=13, shol_d2=11, out_col="red", in_col="green");
+    parabolic(con_l=30, k=1, con_d1=14, con_d2=13, shol_l=10, shol_d1=13, shol_d2=11, out_col="red", in_col="green");
 
     translate([0, 0, -30])
     cube(100);
 }
 
 // elliptical
-
-
 difference()
 {
     elliptical(con_l=30, con_d1=14, con_d2=13, shol_l=10, shol_d1=13, shol_d2=11, step=1);
