@@ -54,7 +54,7 @@ module elliptical(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col
         }
 
         translate([0, 0, -shol_l])
-        tube(shol_l+(shol_d1 - shol_d2), shol_d1, shol_d2, out_col, in_col);
+        tube(shol_l+(shol_d1 - shol_d2)*2, shol_d1, shol_d2, out_col, in_col);
     }
 }
 //
@@ -90,7 +90,7 @@ module tangental(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col=
             polygon(inner);
         }
         translate([0, 0, -shol_l])
-        tube(shol_l+(shol_d1-shol_d2), shol_d1, shol_d2, out_col, in_col);
+        tube(shol_l+(shol_d1-shol_d2)*2, shol_d1, shol_d2, out_col, in_col);
     }
 }
 //
@@ -125,7 +125,7 @@ module parabolic(con_l, con_d1, con_d2, k=1, shol_l=0, shol_d1=0, shol_d2=0, out
         }
 
         translate([0, 0, -shol_l])
-        tube(shol_l+(shol_d1-shol_d2), shol_d1, shol_d2, out_col, in_col);
+        tube(shol_l+(shol_d1-shol_d2)*2, shol_d1, shol_d2, out_col, in_col);
 
     }
 
@@ -159,7 +159,7 @@ module power(con_l, con_d1, con_d2, k=1, shol_l=0, shol_d1=0, shol_d2=0, out_col
         }
         translate([0, 0, -shol_l])
         color("green")
-        tube(shol_l+(shol_d1-shol_d2), shol_d1, shol_d2, out_col, in_col);
+        tube(shol_l+(shol_d1-shol_d2)*1.7, shol_d1, shol_d2, out_col, in_col);
     }
 }
 //
@@ -199,7 +199,7 @@ module haack(con_l, con_d1, con_d2, k=0.333333, shol_l=0, shol_d1=0, shol_d2=0, 
             polygon(inner);
         }
         translate([0, 0, -shol_l])
-        tube(shol_l+(shol_d1-shol_d2), shol_d1, shol_d2, out_col, in_col);
+        tube(shol_l+(shol_d1-shol_d2)*2, shol_d1, shol_d2, out_col, in_col);
     }
 }
 //
