@@ -7,7 +7,7 @@ $fn = 50;
 module conical(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="orage", in_col="red")
 {
     // a conical nose cone, no speciallity
-    translate([0, 0, shol_l])
+
     union()
     {
         difference()
@@ -37,7 +37,6 @@ module elliptical(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col
     outer = concat(ellip1, [[0, 0]]);
     inner = concat(ellip2, [[0, 0]]);
 
-    translate([0, 0, shol_l])
     union()
     {
         difference() {
@@ -72,7 +71,6 @@ module tangental(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col=
     outer = concat(tang1, [[con_l, 0]]);
     inner = concat(tang2, [[con_l, 0]]);
 
-    translate([0, 0, shol_l])
     union()
     {
         translate([0, 0, con_l])
@@ -106,7 +104,7 @@ module parabolic(con_l, con_d1, con_d2, k=1, shol_l=0, shol_d1=0, shol_d2=0, out
 
     outer = concat(para1, [[con_l, 0]]);
     inner = concat(para2, [[con_l, 0]]);
-    translate([0, 0, shol_l])
+
     union()
     {
         translate([0, 0, con_l])
@@ -140,7 +138,6 @@ module power(con_l, con_d1, con_d2, k=1, shol_l=0, shol_d1=0, shol_d2=0, out_col
     outer = concat(pow1, [[con_l, 0]]);
     inner = concat(pow2, [[con_l, 0]]);
 
-    translate([0, 0, shol_l])
     union()
     {
         translate([0, 0, con_l])
@@ -181,7 +178,6 @@ module haack(con_l, con_d1, con_d2, k=0.333333, shol_l=0, shol_d1=0, shol_d2=0, 
     outer = concat(seri1, [[con_l, 0]]);
     inner = concat(seri2, [[con_l, 0]]);
 
-    translate([0, 0, shol_l])
     union()
     {
         translate([0, 0, con_l])
