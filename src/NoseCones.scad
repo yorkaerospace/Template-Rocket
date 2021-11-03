@@ -2,8 +2,6 @@ use <BasicComponents.scad>
 
 // units: mm
 
-$fn = 50;
-
 module conical(con_l, con_d1, con_d2, shol_l=0, shol_d1=0, shol_d2=0, out_col="orage", in_col="red")
 {
     // a conical nose cone, no speciallity
